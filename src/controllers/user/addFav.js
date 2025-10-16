@@ -35,9 +35,16 @@ export const addFav = async(req,res,next)=>{
 
 export const getFav = async(req,res,next)=>{
     const userId = req.user.id
-    const user = User.findById(userId)
+    const user = await User.findById(userId)
     if(!user){
         return next(new CustomError("user not found",404))
     }
-    
+    const UserFav = user.fav;
+    if(!UserFav || UserFav.length === 0){
+        return next(new CustomError("user fav empty",404))
+    }
+    res.status(200).json({
+        message:"user fav items",
+        fav: UserFav
+    })
 }
