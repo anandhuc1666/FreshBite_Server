@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import manageErr from "./middlewares/manageError.js";
 import usercart from "./routes/cartRoutes.js"
+import userFav from "./routes/favRouters.js"
 dotenv.config();
 const app = express();
 
@@ -19,7 +20,7 @@ app.get("/", (req, res) => {
 app.use("/auth", userAuthRoutes);
 app.use("/user", userRoutes);
 app.use("/add",usercart)
-app.use("/fav")
+app.use("/fav",userFav)
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => console.log("DB connected"))
