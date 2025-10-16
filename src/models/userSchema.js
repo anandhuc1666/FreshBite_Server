@@ -14,6 +14,19 @@ const cartItemSchema = new mongoose.Schema(
   { _id: false }
 );
 
+const favItemSchema = new mongoose.Schema({
+   productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+    img: String,
+    item: String,
+    rate: Number,
+    cat: String,
+    detail: String,
+    price: Number,
+    quantity: { type: Number, default: 1 },
+  },
+  { _id: false }
+)
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -46,7 +59,7 @@ const userSchema = new mongoose.Schema(
       default: [],
     },
     fav: {
-      type: Array,
+      type: [favItemSchema],
       default: [],
     },
     order: {
