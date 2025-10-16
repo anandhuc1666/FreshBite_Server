@@ -1,6 +1,5 @@
 import express from "express";
 import trycatch from "../middlewares/tryCatch.js";
-import { cartAdd } from "../controllers/user/cartController.js";
 import {
   getProductById,
   getProducts,
@@ -11,5 +10,4 @@ routes
   //Product
   .get("/product", trycatch(getProducts))
   .get("/product/:id", trycatch(getProductById))
- .post("/cart/add/:userId/:productId", cartAdd);
 export default routes;

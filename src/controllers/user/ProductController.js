@@ -9,6 +9,8 @@ export const getProducts = async (req, res) => {
     res.status(500).json({ message: "Failed to fetch products", error });
   }
 };
+
+
 export const getProductById = async (req, res, next) => {
    const {id} = req.params;
    console.log(id)
