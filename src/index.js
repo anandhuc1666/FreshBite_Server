@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import userAuthRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import manageErr from "./middlewares/manageError.js";
@@ -17,11 +18,12 @@ app.get("/", (req, res) => {
 
 app.use("/auth", userAuthRoutes);
 app.use("/user", userRoutes);
+app.use("/usercart", cartRoutes);
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => console.log("DB connected"))
   .catch((e) => console.log("error :", e));
-  app.use(manageErr)
+app.use(manageErr);
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is on Running ${PORT}`);

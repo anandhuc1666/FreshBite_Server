@@ -10,4 +10,5 @@ routes
   //Product
   .get("/product", trycatch(getProducts))
   .get("/product/:id", trycatch(getProductById))
+
 export default routes;
