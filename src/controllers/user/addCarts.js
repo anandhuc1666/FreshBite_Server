@@ -14,40 +14,123 @@
 //     const user = User.id
 // }
 
+// import User from "../../models/userSchema.js";
+// import Products from "../../models/productSchema.js";
+// import CustomError from "../../utils/customError.js";
+
+// // 👉 Add product to user's cart
+// export const addToCart = async (req, res, next) => {
+//   try {
+//     const userId = req.user.id; // ✅ from token (decoded in middleware)
+//     const { productId } = req.params;
+
+//     // 1. Find the product
+//     const product = await Products.findById(productId);
+//     if (!product) {
+//       return next(new CustomError("Product not found", 404));
+//     }
+
+//     // 2. Find the user
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return next(new CustomError("User not found", 404));
+//     }
+
+//     // 3. Check if product already exists in cart
+//     const existingItem = user.cart.find(
+//       (item) => item.productId.toString() === productId
+//     );
+
+//     if (existingItem) {
+//       // If product already in cart → increase quantity
+//       existingItem.quantity += 1;
+//     } else {
+//       // If new product → push to cart array
+//       user.cart.push({
+//         productId: product._id,
+//         img: product.img,
+//         item: product.item,
+//         rate: product.rate,
+//         cat: product.cat,
+//         detail: product.detail,
+//         price: product.price,
+//         quantity: 1,
+//       });
+//     }
+
+//     // 4. Save user
+//     await user.save();
+
+//     res.status(200).json({
+//       message: "Product added to cart successfully",
+//       cart: user.cart,
+//     });
+//   } catch (error) {
+//     next(new CustomError(error.message, 500));
+//   }
+// };
+
+// // 👉 Get user's cart
+// export const getCart = async (req, res, next) => {
+//   try {
+//     const userId = req.user.id;
+//     const user = await User.findById(userId).populate("cart.productId");
+
+//     if (!user) {
+//       return next(new CustomError("User not found", 404));
+//     }
+
+//     res.status(200).json({ cart: user.cart });
+//   } catch (error) {
+//     next(new CustomError(error.message, 500));
+//   }
+// };
+
+// // 👉 Remove item from cart
+// export const removeFromCart = async (req, res, next) => {
+//   try {
+//     const userId = req.user.id;
+//     const { productId } = req.params;
+
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return next(new CustomError("User not found", 404));
+//     }
+
+//     user.cart = user.cart.filter(
+//       (item) => item.productId.toString() !== productId
+//     );
+
+//     await user.save();
+
+//     res.status(200).json({
+//       message: "Product removed from cart",
+//       cart: user.cart,
+//     });
+//   } catch (error) {
+//     next(new CustomError(error.message, 500));
+//   }
+// };
 
 import User from "../../models/userSchema.js";
-import Products from "../../models/productSchema.js";
-import CustomError from "../../utils/customError.js";
+import Product from "../../models/productSchema.js";
 
-// 👉 Add product to user's cart
-export const addToCart = async (req, res, next) => {
-  try {
-    const userId = req.user.id; // ✅ from token (decoded in middleware)
-    const { productId } = req.params;
-
-    // 1. Find the product
-    const product = await Products.findById(productId);
-    if (!product) {
-      return next(new CustomError("Product not found", 404));
-    }
-
-    // 2. Find the user
-    const user = await User.findById(userId);
-    if (!user) {
-      return next(new CustomError("User not found", 404));
-    }
-
-    // 3. Check if product already exists in cart
-    const existingItem = user.cart.find(
-      (item) => item.productId.toString() === productId
-    );
-
-    if (existingItem) {
-      // If product already in cart → increase quantity
-      existingItem.quantity += 1;
-    } else {
-      // If new product → push to cart array
-      user.cart.push({
+export const cartAdd = async (req, res, next) => {
+  const { id } = req.params;
+  console.log(id);
+  
+  const product = await Product.findById(id);
+  if (!product) {
+    return next(new CustomError("product not found", 404));
+  }
+  const userId = req.user.id;
+  console.log(userId);
+  
+  const user = await User.findById(userId);
+  if (!user) {
+    return next(new CustomError("user not found", 404));
+  }
+   user.cart.push({
         productId: product._id,
         img: product.img,
         item: product.item,
@@ -57,58 +140,6 @@ export const addToCart = async (req, res, next) => {
         price: product.price,
         quantity: 1,
       });
-    }
-
-    // 4. Save user
-    await user.save();
-
-    res.status(200).json({
-      message: "Product added to cart successfully",
-      cart: user.cart,
-    });
-  } catch (error) {
-    next(new CustomError(error.message, 500));
-  }
-};
-
-// 👉 Get user's cart
-export const getCart = async (req, res, next) => {
-  try {
-    const userId = req.user.id;
-    const user = await User.findById(userId).populate("cart.productId");
-
-    if (!user) {
-      return next(new CustomError("User not found", 404));
-    }
-
-    res.status(200).json({ cart: user.cart });
-  } catch (error) {
-    next(new CustomError(error.message, 500));
-  }
-};
-
-// 👉 Remove item from cart
-export const removeFromCart = async (req, res, next) => {
-  try {
-    const userId = req.user.id;
-    const { productId } = req.params;
-
-    const user = await User.findById(userId);
-    if (!user) {
-      return next(new CustomError("User not found", 404));
-    }
-
-    user.cart = user.cart.filter(
-      (item) => item.productId.toString() !== productId
-    );
-
-    await user.save();
-
-    res.status(200).json({
-      message: "Product removed from cart",
-      cart: user.cart,
-    });
-  } catch (error) {
-    next(new CustomError(error.message, 500));
-  }
+    await user.save()
+  res.status(200).json({ message: "product found", product });
 };

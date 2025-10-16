@@ -2,10 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import userAuthRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import cartRoutes from "./routes/cartRoutes.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import manageErr from "./middlewares/manageError.js";
+import usercart from "./routes/cartRoutes.js"
 dotenv.config();
 const app = express();
 
@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", userAuthRoutes);
 app.use("/user", userRoutes);
-app.use("/usercart", cartRoutes);
+app.use("/add",usercart)
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => console.log("DB connected"))

@@ -23,6 +23,7 @@ const verifyUser = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.ACESS_SECRET);
     req.user = { id: decoded.id }; // store user id for later use
+    console.log(req.user)
     next();
   } catch (error) {
     return next(new CustomError("Invalid token", 401));
