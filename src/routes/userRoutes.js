@@ -1,6 +1,7 @@
 import express from "express";
 import trycatch from "../middlewares/tryCatch.js";
 import {
+  catecary,
   getProductById,
   getProducts,
 } from "../controllers/user/ProductController.js";
@@ -10,5 +11,5 @@ routes
   //Product
   .get("/product", trycatch(getProducts))
   .get("/product/:id", trycatch(getProductById))
-
+  .get("/product/find/:id",trycatch(catecary))
 export default routes;

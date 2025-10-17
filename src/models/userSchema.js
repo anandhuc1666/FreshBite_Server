@@ -32,6 +32,9 @@ const orderItemSchema = new mongoose.Schema( {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Products",
     },
+    price:{
+      type:Number
+    },
     quantity: {
       required: true,
       type: Number,
