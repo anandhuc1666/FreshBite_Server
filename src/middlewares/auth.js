@@ -24,7 +24,6 @@ const verifyUser = (req, res, next) => {
         return next(new CustomError("user id not found", 404));
       }
       req.user = decode; // store user id for later use
-      console.log(req.user);
       next();
     });
   } catch (error) {

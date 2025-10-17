@@ -49,7 +49,7 @@ if(!user){
 }
 const cartItems = user.cart;
 if(!cartItems || cartItems.length === 0){
-  return next(new CustomError("user cart array will be empty"))
+  return next(new CustomError("user cart array will be empty",404))
 }
 res.status(200).json({
   message: "user cart items",

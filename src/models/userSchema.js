@@ -26,17 +26,18 @@ const favItemSchema = new mongoose.Schema({
   },
   { _id: false }
 );
-const oerItemSchema = new mongoose.Schema({
-   productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
-    img: String,
-    item: String,
-    rate: Number,
-    cat: String,
-    detail: String,
-    price: Number,
-    quantity: { type: Number, default: 1 },
+const orderItemSchema = new mongoose.Schema( {
+    productId: {
+      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Products",
+    },
+    quantity: {
+      required: true,
+      type: Number,
+    },
   },
-  { _id: false }
+  { timestamps: true }
 )
 
 const userSchema = new mongoose.Schema(
@@ -75,7 +76,7 @@ const userSchema = new mongoose.Schema(
       default: [],
     },
     order: {
-      type:[oerItemSchema],
+      type:[orderItemSchema],
       default: [],
     },
   },
