@@ -48,3 +48,19 @@ export const getFav = async(req,res,next)=>{
         fav: UserFav
     })
 }
+//delete the related product id on the list
+
+// export const deltCart = async(req,res)=>{
+//   const userId = req.user.id;
+//   const user = await User.findById(userId)
+//   const productId = req.params
+//   const userCart = user.cart
+//   const findItem = userCart.find((item)=>item.productId.toString()===productId) 
+//   userCart = userCart.filter((item)=>item.productId !== findItem.id)
+//   if(userCart){
+//     return res.status(200).json({message:"your item is delete",
+//       cart: user.cart  
+//     })
+//   }
+//   await userCart.save()
+// }
