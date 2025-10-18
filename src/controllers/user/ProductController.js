@@ -18,8 +18,7 @@ export const getProductById = async (req, res, next) => {
 if(!product){
     return next(new CustomError("product not found",404))
 }
-res.status(200).json({message:"product found",product})
-
+res.status(200).json({message:"product found",product}) 
 };
 
 //find your catecary they can select the item 
@@ -32,3 +31,6 @@ export const catecary = async(req,res,next)=>{
   res.status(200).json({message:"your selected items",product})
 }
 
+export const search = async(req,res)=>{
+  
+}
