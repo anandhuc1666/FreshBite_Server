@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+//users all order save for the access the admin
 const OrderSchema = new mongoose.Schema(
   {
     productId: {
