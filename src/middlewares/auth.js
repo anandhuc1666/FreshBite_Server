@@ -1,13 +1,3 @@
-// import CustomError from "../utils/customError"
-
-// const verifyUser = (req,res,next)=>{
-//    const token = req.cookies?.userToken
-//    if(!token){
-//     return next(new CustomError("token not found",404))
-//    }
-// }
-// export default verifyUser
-
 import jwt from "jsonwebtoken";
 import CustomError from "../utils/customError.js";
 
@@ -23,7 +13,7 @@ const verifyUser = (req, res, next) => {
       if (err) {
         return next(new CustomError("user id not found", 404));
       }
-      req.user = decode; // store user id for later use
+      req.user = decode; // store user id 
       next();
     });
   } catch (error) {

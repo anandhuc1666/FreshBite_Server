@@ -11,8 +11,9 @@ export const login = async (req, res, next) => {
     return next(new CustomError("Invalid Credentials", 400));
   }
   //check the email & password is 200--------//
-  const user = await User.findOne({ email: email });
+  const user = await User.findOne({ email: email});
   if (!user) {
+    
     return next(new CustomError("user not found",404))
   }
   const isMatch = await bcrypt.compare(password, user.password);
