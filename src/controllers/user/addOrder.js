@@ -7,11 +7,6 @@ export const addOrder = async (req, res) => {
     const user = await User.findById(userId);
     const Oderuser = user.order;
     if (!user) return res.status(404).json({ message: "User not found" });
-    // const { cart } = req.body;
-    // if (!cart || cart.length === 0) {
-    //   return res.status(400).json({ message: "Cart is empty" });
-    // }
-    // console.log(cart);
     const createdOrders = await Orders.insertMany(
       user?.cart?.map((item) => {
         return {
@@ -21,13 +16,8 @@ export const addOrder = async (req, res) => {
         };
       })
     );
-
-    // Also add to user order history
     Oderuser.push(...createdOrders);
-
-    // Clear the user cart after order
     user.cart = [];
-
     await user.save();
 
     res.status(201).json({

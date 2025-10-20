@@ -4,16 +4,13 @@ import CustomError from "../../utils/customError.js";
 
 export const cartAdd = async (req, res, next) => {
   const { productId } = req.params;
-  console.log(productId);
-  
+ 
   const product = await Product.findById(productId);
   if (!product) {
     return next(new CustomError("product not found", 404));
   }
   
-  const userId = req.user.id;
-  console.log(userId);
-  
+  const userId = req.user.id; 
   const user = await User.findById(userId);
     if (!user) {
     return next(new CustomError("user not found", 404));

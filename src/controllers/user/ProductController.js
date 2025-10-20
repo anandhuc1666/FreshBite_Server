@@ -1,6 +1,7 @@
+import { disconnect } from "mongoose";
 import Product from "../../models/productSchema.js";
 import CustomError from "../../utils/customError.js";
-
+//get all product from the mongodb product collection
 export const getProducts = async (req, res) => {
   try {
     const products = await Product.find();
@@ -10,7 +11,7 @@ export const getProducts = async (req, res) => {
   }
 };
 
-
+//get one product from the mongodb product collection
 export const getProductById = async (req, res, next) => {
    const {id} = req.params;
    console.log(id)
@@ -21,7 +22,7 @@ if(!product){
 res.status(200).json({message:"product found",product}) 
 };
 
-//find your catecary they can select the item 
+//find the catecary from thr params 
 export const catecary = async(req,res,next)=>{
   const {id} = req.params; 
   if(!id){
@@ -29,8 +30,4 @@ export const catecary = async(req,res,next)=>{
   }
   const product = await Product.find({cat:id})
   res.status(200).json({message:"your selected items",product})
-}
-
-export const search = async(req,res)=>{
-  
 }
