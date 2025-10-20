@@ -60,4 +60,6 @@ export const logOut = async(req,res)=>{
     secure: true,
     sameSite: "lax",
    })
+   console.log("delete")
+   res.status(200).json({message:"user is delete"})
 }
