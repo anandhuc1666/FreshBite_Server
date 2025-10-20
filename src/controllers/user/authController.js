@@ -49,6 +49,7 @@ export const register = async (req, res, next) => {
     password: hashedPassword,
     number: number,
   });
+  console.log(newUser)
   await newUser.save();
   res.status(201).json({ message: "new user is created" });
 };
