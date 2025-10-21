@@ -23,6 +23,7 @@ app.use("/user", userRoutes);
 app.use("/add",usercart)
 app.use("/fav",userFav)
 app.use("/order",userOrder)
+app.user("/admin")
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => console.log("DB connected"))
