@@ -17,13 +17,14 @@ export const productCatecary = async (req, res, next) => {
   const products = await Products.find({ cat: catecaryId });
   if (!products || products.length === 0) {
     return next(new CustomError(`sorry ${catecaryId} not available`, 404));
-  } else {
-    next(new CustomError(`sorry ${catecaryId} not available`, 404));
-  }
+  } 
   res
     .status(200)
     .json({ message: `product catecary is ${catecaryId}`, items: products });
 };
+
+
+
 export const spacificProduct = async (req, res, next) => {
   const { productId } = req.params;
   const product = await Products.findById(productId);
@@ -35,6 +36,9 @@ export const spacificProduct = async (req, res, next) => {
     .status(200)
     .json({ message: `products is ${product.item}`, product: product });
 };
+
+
+
 export const newProduct = async(req,res,next)=>{
    const {item,img,rate,detail,img1,img2,img3,area,price} = req.body;
    const product = await Products.insertOne({
@@ -53,4 +57,31 @@ export const newProduct = async(req,res,next)=>{
    }
    res.status(200).json({message:`${product.item} is added the product section`})
    await product.save()
+}
+
+
+
+export const deltProduct = async(req,res,next)=>{
+   const {productId} = req.params;
+   const dltProduct = await Products.findByIdAndDelete(productId)
+   if(!dltProduct){
+      return next(new CustomError("product not available",404))
+   }
+   res.status(200).json({message:"item is deleted"})
+   await dltProduct.save()
+}
+
+export const updateProduct = async(req,res,next)=>{
+   const {item,img,rate,detail,img1,img2,img3,area,price} = req.body;
+   const product = await Products.findOneAndUpdate({
+      item:item,
+      img:img,
+      img1:img1,
+      detail:detail,
+      img2:img2,
+      img3:img3,
+      price:price,
+      rate:rate,
+      area:area
+   })
 }

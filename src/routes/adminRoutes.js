@@ -1,6 +1,6 @@
 import trycatch from "../middlewares/tryCatch.js";
 import login from "../controllers/admin/adminLogin.js"
-import {newProduct, product, productCatecary, spacificProduct} from "../controllers/admin/Products.js"
+import {deltProduct, newProduct, product, productCatecary, spacificProduct} from "../controllers/admin/Products.js"
 import {customer, findUser} from "../controllers/admin/Ausers.js"
 import express from "express"
 const routes = express.Router()
@@ -13,6 +13,7 @@ routes
 .get('/catecary/:catecaryId',trycatch(productCatecary))
 .get('/products/:productId',trycatch(spacificProduct))
 .post('/product/addNew',trycatch(newProduct))
+.delete('/product/:productId',trycatch(deltProduct))
 
 export default routes
 
