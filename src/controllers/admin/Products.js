@@ -24,12 +24,33 @@ export const productCatecary = async (req, res, next) => {
     .status(200)
     .json({ message: `product catecary is ${catecaryId}`, items: products });
 };
-export const spacificProduct = async(req,res,next)=>{
-   const {productId} = req.params;
-   const product = await Products.findById(productId)
-   if(!product || product===0){
-      return next(new CustomError("product not found",404))
+export const spacificProduct = async (req, res, next) => {
+  const { productId } = req.params;
+  const product = await Products.findById(productId);
+  if (!product || product === 0) {
+    return next(new CustomError("product not found", 404));
+  }
+  console.log(product);
+  res
+    .status(200)
+    .json({ message: `products is ${product.item}`, product: product });
+};
+export const newProduct = async(req,res,next)=>{
+   const {item,img,rate,detail,img1,img2,img3,area,price} = req.body;
+   const product = await Products.insertOne({
+      item:item,
+      img:img,
+      img1:img1,
+      detail:detail,
+      img2:img2,
+      img3:img3,
+      price:price,
+      rate:rate,
+      area:area
+   })
+   if(!product){
+      return next(new CustomError("product not be created",404))
    }
-   console.log(product);
-    res.status(200).json({message:`products is ${product.name}`,product:product})
+   res.status(200).json({message:`${product.item} is added the product section`})
+   await product.save()
 }
