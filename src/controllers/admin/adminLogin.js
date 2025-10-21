@@ -4,7 +4,7 @@ import CustomError from "../../utils/customError.js";
 import { gtUserToken } from "../../utils/jwt.js";
 
 
-export const adminLogin = async(req,res,next)=>{
+ const adminLogin = async(req,res,next)=>{
     const {email,password} = req.body;
     if(!email||!password){
         return next(new CustomError("plese fill the email and password"))
@@ -23,7 +23,6 @@ export const adminLogin = async(req,res,next)=>{
         secure: true,
         sameSite: "strict",
       });
-      res.status(200).json({ message: "User loggin sucess", userToken });
-    
-
+      res.status(200).json({ message: `${"role:" ,findUser.role} loggin sucess`, userToken });
 }
+export default adminLogin
