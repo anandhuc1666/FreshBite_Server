@@ -1,7 +1,7 @@
-import User from "../../models/userSchema";
+import User from "../../models/userSchema.js";
 import bcrypt from "bcrypt"
-import CustomError from "../../utils/customError";
-import { gtUserToken } from "../../utils/jwt";
+import CustomError from "../../utils/customError.js";
+import { gtUserToken } from "../../utils/jwt.js";
 
 
 export const adminLogin = async(req,res,next)=>{

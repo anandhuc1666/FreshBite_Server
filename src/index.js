@@ -8,6 +8,7 @@ import manageErr from "./middlewares/manageError.js";
 import usercart from "./routes/cartRoutes.js"
 import userFav from "./routes/favRouters.js"
 import userOrder from "./routes/orderRoutes.js"
+import AdLogin from "./routes/adminRoutes.js"
 dotenv.config();
 const app = express();
 
@@ -23,7 +24,7 @@ app.use("/user", userRoutes);
 app.use("/add",usercart)
 app.use("/fav",userFav)
 app.use("/order",userOrder)
-app.user("/admin")
+app.use("/admin",AdLogin)
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => console.log("DB connected"))
