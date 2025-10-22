@@ -16,6 +16,10 @@ const OrderSchema = new mongoose.Schema(
       required: true,
       type: Number,
     },
+    price:{
+      require:true,
+      type:Number,
+    }
   },
   { timestamps: true }
 );
