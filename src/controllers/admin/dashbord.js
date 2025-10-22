@@ -17,16 +17,16 @@ export const totalProduct = async (req, res, next) => {
   const products = await Products.find({ _id: { $in: productIds } });
 
   // all user and product details
-   const orderDetails = allOrders.map((order) => {
+  const orderDetails = allOrders.map((order) => {
     const user = users.find(
       (p) => p._id.toString() === order.userId.toString()
     );
     const product = products.find(
       (p) => p._id.toString() === order.productId.toString()
     );
-   const UpdateTym = order.createdAt
-   const date = new Date(UpdateTym)
-   const dateset = date.toLocaleDateString()
+    const UpdateTym = order.createdAt;
+    const date = new Date(UpdateTym);
+    const dateset = date.toLocaleDateString();
     return {
       orderId: order ? order._id : null,
       userName: user ? user.name : "",
@@ -34,7 +34,7 @@ export const totalProduct = async (req, res, next) => {
       price: product ? product.price : null,
       quantity: order ? order.quantity : null,
       total: product.price * order.quantity,
-      Date:dateset
+      Date: dateset,
     };
   });
   if (!orderDetails) {
@@ -42,4 +42,8 @@ export const totalProduct = async (req, res, next) => {
   }
   const list = [{ ...allOrders.length, orderDetails }];
   res.status(200).json({ message: `total orders: ${allOrders.length}`, list });
+};
+
+export const revenue = async (req, res, next) => {
+  
 };
