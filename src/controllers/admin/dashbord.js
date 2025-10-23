@@ -45,5 +45,31 @@ export const totalProduct = async (req, res, next) => {
 };
 
 export const revenue = async (req, res, next) => {
-  
+  const allOrders = await Orders.find();
+  const productIds = allOrders.map((order) => order.productId);
+  if (!productIds) {
+    return next(new CustomError("product not found", 404));
+  }
+  const usersId = allOrders.map((user) => user.userId);
+  if (!usersId) {
+    return next(new CustomError("user not available", 404));
+  }
+  const products = await Products.find({ _id: { $in: productIds } });
+
+  // all user and product details
+  const revenue = [];
+  const orderDetails = allOrders.map((order) => {
+    const product = products.find(
+      (p) => p._id.toString() === order.productId.toString()
+    );
+    revenue.push(product.price * order.quantity);
+  });
+  if (!orderDetails) {
+    return next(new CustomError("order not available", 404));
+  }
+  const Totalrevenue = revenue.reduce((u, v) => u + v, 0);
+  console.log(Totalrevenue);
+  res
+    .status(200)
+    .json({ message: `total orders: ${allOrders.length}`, Totalrevenue });
 };
