@@ -2,6 +2,7 @@ import User from "../../models/userSchema.js";
 import bcrypt from "bcrypt";
 import { gtUserToken } from "../../utils/jwt.js";
 import CustomError from "../../utils/customError.js";
+import { authSchema } from "../../helpers/validationJoi.js";
 
 //create a new user-----------//
 export const login = async (req, res, next) => {
@@ -11,14 +12,13 @@ export const login = async (req, res, next) => {
     return next(new CustomError("Invalid Credentials", 400));
   }
   //check the email & password is 200--------//
-  const user = await User.findOne({ email: email});
+  const user = await User.findOne({ email: email });
   if (!user) {
-    
-    return next(new CustomError("user not found",404))
+    return next(new CustomError("user not found", 404));
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    return next(new CustomError("password is invalid",400))
+    return next(new CustomError("password is invalid", 400));
   }
   const userToken = gtUserToken(user._id);
   res.cookie("userToken", userToken, {
@@ -31,14 +31,13 @@ export const login = async (req, res, next) => {
 
 //register a new user -------------//
 export const register = async (req, res, next) => {
-  const { name, email, password, number } = req.body;
-  if (!name || !email || !password || !number) {
-    return next(new CustomError("invalide credentials",404))
-  }
+  const result = await authSchema.validateAsync(req.body);
+  console.log(result);
+  const { name, email, password, number } = result;
   const checkUser = await User.findOne({ email: email });
   console.log(checkUser);
   if (checkUser) {
-    return next(new CustomError("user are exsisted",400))
+    return next(new CustomError("user are exsisted", 400));
   }
   const salt = await bcrypt.genSalt(8);
   const hashedPassword = await bcrypt.hash(password, salt);
@@ -49,17 +48,16 @@ export const register = async (req, res, next) => {
     password: hashedPassword,
     number: number,
   });
-  console.log(newUser)
   await newUser.save();
   res.status(201).json({ message: "new user is created" });
 };
 
-export const logOut = async(req,res)=>{
-   res.clearCookie("userToken",{
+export const logOut = async (req, res) => {
+  res.clearCookie("userToken", {
     httpOnly: true,
     secure: true,
     sameSite: "lax",
-   })
-   console.log("delete")
-   res.status(200).json({message:"user is delete"})
-}
+  });
+  console.log("delete");
+  res.status(200).json({ message: "user is delete" });
+};
