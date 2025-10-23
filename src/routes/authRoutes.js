@@ -6,7 +6,8 @@ const routes = express.Router();
 routes
   //Auth
   .post("/login", trycatch(login))
-  .post("/register", trycatch(register))
+  // .post("/register", trycatch(register))
+    .post("/register", register)
   .post("/logput",trycatch(logOut))
 
 export default routes;

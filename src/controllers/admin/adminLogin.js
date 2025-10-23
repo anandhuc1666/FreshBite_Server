@@ -9,6 +9,7 @@ import { gtUserToken } from "../../utils/jwt.js";
     if(!email||!password){
         return next(new CustomError("plese fill the email and password"))
     }
+
     const findUser = await User.findOne({email:email})
     if(!findUser){
         return next(new customElements("user not found",404))
