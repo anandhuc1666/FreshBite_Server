@@ -36,7 +36,6 @@ export const register = async (req, res, next) => {
   console.log(result);
   const { name, email, password, number } = result;
   const checkUser = await User.findOne({ email: email });
-  console.log(checkUser);
   if (checkUser) {
     return next(new CustomError("user are exsisted", 400));
   }
