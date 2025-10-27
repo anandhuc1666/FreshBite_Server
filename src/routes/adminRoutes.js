@@ -10,7 +10,7 @@ routes
 .post('/login',trycatch(login))
 .get('/products',trycatch(product))
 .get('/users',trycatch(customer))
-.get('/user/:userId',trycatch(findUser))
+.get('/user/:username',trycatch(findUser))
 .get('/catecary/:catecaryId',trycatch(productCatecary))
 .get('/products/:productId',trycatch(spacificProduct))
 .post('/product/addNew',trycatch(newProduct))
