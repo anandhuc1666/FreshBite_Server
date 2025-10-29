@@ -4,7 +4,6 @@ import {deltProduct, newProduct, product, productCatecary, spacificProduct, upda
 import {customer, findUser} from "../controllers/admin/Ausers.js"
 import express from "express"
 import { revenue, totalProduct } from "../controllers/admin/dashbord.js";
-import { datass } from "../controllers/admin/newCollect.js";
 const routes = express.Router()
 //admin login routes
 routes
@@ -19,7 +18,6 @@ routes
 .patch('/product/:updateId',trycatch(updateProduct))
 .get('/product/totalOrder',trycatch(totalProduct))
 .get('/product/revenue',trycatch(revenue))
-.get('/nonproduct',datass)
 
 export default routes
 
