@@ -81,9 +81,9 @@ export const updateProduct = async (req, res, next) => {
     rate: rate,
     area: area,
   });
-  if(!productFind){
-   return next(new CustomError("product not update",404))
+  if (!productFind) {
+    return next(new CustomError("product not update", 404));
   }
-  res.status(200).json({message:"product is updated",update:productFind})
+  res.status(200).json({ message: "product is updated", update: productFind });
   await productFind.save();
 };
