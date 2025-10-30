@@ -11,7 +11,8 @@ export const getProducts = async (req, res) => {
   }
 };
 
-//get one product from the mongodb product collection
+//get one product from the mongodb
+ product collection
 export const getProductById = async (req, res, next) => {
    const {id} = req.params;
    console.log(id)
