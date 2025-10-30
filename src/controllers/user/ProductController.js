@@ -29,6 +29,7 @@ export const catecary = async(req,res,next)=>{
   if(!id){
     return next(new CustomError("user item not availabel",404))
   }
+
   const product = await Product.find({cat:id})
   res.status(200).json({message:"your selected items",product})
 }
